@@ -10,9 +10,10 @@ import repositorio.lib.Opciones as opc
 """
 Formulario basado en el modelo EspecificacionLOM
 """
-class EspecificacionForm(ModelForm):
+class EspecificacionForm(forms.ModelForm):
 	class Meta:
 		model=EspecificacionLOM
+		fields = '__all__'
 		#modificación de cada uno de los campos que se muestran en la plantilla para que tengan un tamaño fijo
 		widgets = {
 			'lc1_titulo': TextInput(attrs={'size': 40}),
