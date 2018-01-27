@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% block titulo %} siova: Sistema de Información Objetos de Aprendizaje {% endblock %}
+{% block itemMenu %}
+	{% if usuario.profile.rol = 'rdoc' %}
+		<li><a class="menusbtn" href="/docente">Objetos</a></li>
+	{% endif %}
+	{% if usuario.profile.rol = 'radm' %}
+		<li><a class="menusbtn" href="/admin">Administrador</a></li>
+	{% endif %}
+	{% if usuario.profile.rol = 'rcat' %}
+		<li><a class="menusbtn" href="/proyecto">Proyectos</a></li>
+	{% endif %}
+	{% if usuario.profile.rol = 'rrev' %}
+		<li><a class="menusbtn" href="/revisor">Proyectos</a></li>
+	{% endif %}
+{% endblock %}
+{% block itemMenuUs %}
+	<li class="menusubtn">Bienvenido/a, {{usuario.first_name|capfirst}}&nbsp&nbsp</li>
+	<li><a class="menusubtn" href="/cerrar">Salir</a></li>
+{% endblock %}
+{% block itemNav %}<li><a href="/">Inicio</a></li>{% endblock %}
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% block contenidoIzq %}
+	<div class="submenu" id="submenu1">Repositorios</div>
+	<div class="submenu_" id="submenu2">Categorias</div>
+	<div id="contenidosm1">
+		<ul id="rcontenidos">
+			<br>
+			{% for rep in repos %}
+				<li>{{rep.nombre|title}}</li>
+				<ul id="ocontenidos">
+					{% for obj in objetos %}
+						{% if obj.repositorio == rep %}
+							{% if obj.proyecto %}
+								<li><a href="/proyecto/{{obj.id}}">{{obj}}</a></li>
+							{% else %}
+								<li><a href="/objeto/{{obj.id}}">{{obj}}</a></li>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				</ul>
+				<hr><br>
+			{% empty %}
+				<li>No hay repositorios registrados aún.</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div id="contenidosm2">
+		<ul id="rcontenidos">
+			{% for cn1 in catn1 %}
+				<li><a href="/categoria/{{cn1.id}}">
+					{{cn1.nombre_ruta}}
+					<!--{% if cn1.objeto_set.count != 0 %}
+						({{cn1.objeto_set.count}})
+					{% endif %}-->
+				</a></li>
+				<ul id="ocontenidos">
+					{% for cn2 in catn2 %}
+						{% if cn2.cat_padre == cn1 %}
+							<li><a href="/categoria/{{cn2.id}}">
+								{{cn2.nombre_ruta}}
+								<!--{% if cn2.objeto_set.count != 0 %}
+									({{cn2.objeto_set.count}})
+								{% endif %}-->
+							</a></li>
+							<ul id="ocontenidos">
+								{% for cn3 in catn3 %}
+									{% if cn3.cat_padre == cn2 %}
+										<li><a href="/categoria/{{cn3.id}}">
+											{{cn3.nombre_ruta}}
+											<!--{% if cn3.objeto_set.count != 0 %}
+												({{cn3.objeto_set.count}})
+											{% endif %}-->
+										</a></li>
+									{% endif %}
+								{% endfor %}
+							</ul>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}
+{% block contenidoDer %}
+	<div class="submenu" id="busq1">Búsqueda Rápida</div>
+	<div class="submenu_" id="busq2">Búsqueda Avanzada</div>
+	<div id="contenidosm3">
+        <input id="q" type="text" name="q">
+        <input class="menusbtn" id="busca" type="submit" value="Buscar">
+	    <div id="results">
+	    	<ul id="results1">
+	    	</ul>
+		</div>
+	</div>
+	<div id="contenidosm4">
+		<form id="formulario" method="get">
+			Buscar por
+			<p>
+				<input type="checkbox" id="v_tit" name="v_tit" value="True">
+				<label for="id_c_titulo">Título:</label>
+		        {{ form.c_titulo }}
+		    </p>
+		    <p>
+		    	<input type="checkbox" id="v_tob" name="v_tob" value="True">
+				<label for="id_c_tipo_obj">Tipo de Objeto:</label>
+		        {{ form.c_tipo_obj }}
+		    </p>
+		    <p>
+		    	<input type="checkbox" id="v_idi" name="v_idi" value="True">
+				<label for="id_c_idioma">Idioma:</label>
+		        {{ form.c_idioma }}
+		    </p>
+		    <p>
+		    	<input type="checkbox" id="v_nag" name="v_nag" value="True">
+				<label for="id_c_nivel_agregacion">Nivel de agregación:</label>
+		        {{ form.c_nivel_agregacion }}
+		    </p>
+		    <p>
+		    	<input type="checkbox" id="v_fec" name="v_fec" value="True">
+		        <label for="id_c_fecha">Fecha de publicación:</label>
+		        {{ form.c_fecha }}
+		    </p>
+		    <p>
+		    	<input type="checkbox" id="v_tin" name="v_tin" value="True">
+		        <label for="id_c_tipo_inter">Tipo de Interactividad:</label>
+		        {{ form.c_tipo_inter }}
+		    </p>
+		    <p>
+		    	<input type="checkbox" id="v_tre" name="v_tre" value="True">
+		        <label for="id_c_tipo_rec">Tipo de Recurso:</label>
+		        {{ form.c_tipo_rec }}
+		    </p>
+		    <p>
+		    	<input type="checkbox" id="v_nin" name="v_nin" value="True">
+		        <label for="id_c_nivel_inter">Nivel de Interactividad:</label>
+		        {{ form.c_nivel_inter }}
+			</p>
+			{% if usuario.profile.rol = 'rcat' or usuario.profile.rol = 'rrev'%}
+				Asociados al proyecto
+				<p>
+			    	<input type="checkbox" id="v_pfas" name="v_pfas" value="True">
+			        <label for="v_pfas">Fase:</label>
+			        {{ form.c_pro_fase }}
+				</p>
+				<p>
+			    	<input type="checkbox" id="v_ppro" name="v_ppro" value="True">
+			        <label for="v_ppro">Programa Académico:</label>
+			        {{ form.c_pro_prog }}
+				</p>
+				<p>
+			    	<input type="checkbox" id="v_pcal" name="v_pcal" value="True">
+			        <label for="v_pcal">Calificación:</label>
+			        {{ form.c_pro_calif }}
+				</p>
+				<p>
+			    	<input type="checkbox" id="v_pfec" name="v_pfec" value="True">
+			        <label for="v_pfec">Fecha Aprobación:</label>
+			        {{ form.c_pro_fecha }}
+				</p>
+				<p>
+			    	<input type="checkbox" id="v_pgra" name="v_pgra" value="True">
+			        <label for="v_pgra">Grado de Escolaridad:</label>
+			        {{ form.c_pro_gra }}
+				</p>
+			{% endif %}
+			<p><input class="menusbtn" id="busqueda" type="submit" value="Busqueda"/></p>
+		    <div id="resultado">
+		    	<ul id="results2">
+		    	</ul>
+			</div>
+		</form>
+	</div>
+	<div id="cargando"><img src="{{STATIC_URL}}img/loading.gif"/></div>
+{% endblock %}

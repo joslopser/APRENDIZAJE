@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang='es'>
+	<head>
+		<meta charset='utf-8'>
+		<title>REPOSITORIO - {% block titulo %}{% endblock %}</title>
+		<link rel="stylesheet" href='{{STATIC_URL}}css/normalize.css'>
+		<link rel="stylesheet" href='{{STATIC_URL}}css/estilo.css'>
+		<link rel="stylesheet" href='{{STATIC_URL}}css/siova1/jquery-ui-1.10.2.custom.min.css'>
+		<link rel="shortcut icon" href='{{STATIC_URL}}img/icono.png'>
+		<script src="{{STATIC_URL}}js/prefixfree.min.js"></script>
+		<script src='{{STATIC_URL}}js/jquery-1.9.1.min.js'></script>
+		<script src='{{STATIC_URL}}js/jquery-ui-1.10.2.custom.min.js'></script>
+		<script src='{{STATIC_URL}}js/codigo.js'></script>
+	</head>
+	<body>
+		<header>
+			<h1>Sistema de Información Objetos de Aprendizaje</h1>
+		</header>
+		<section id="menu">
+			<nav class="menus" id="menuPrincipal">
+				<ul>
+					{% block itemMenu %}{% endblock %}
+				</ul>
+			</nav>
+			<nav class="menus" id="menuUsuario">
+				<ul>
+					{% block itemMenuUs %}{% endblock %}
+				</ul>
+			</nav>
+		</section>
+		<nav class="menus" id="navegacion">
+			<ul>
+				{% block itemNav %}{% endblock %}
+			</ul>
+		</nav>
+		<section id="contenedor">
+			<section class="contenido" id="contenidoIzq">
+				{% block contenidoIzq %}{% endblock %}
+			</section>
+			<section class="contenido"  id="contenidoDer">
+				{% block contenidoDer %}{% endblock %}
+			</section>
+		</section>
+		<footer>
+			<p>Sistema de Información para la Gestión de Objetos de Aprendizaje, utilizando LOM como esquema de metadatos</p>
+			<p id="autores">Integrantes: Leidy Johanna Reyes Ruiz - Gustavo Adolfo Gómez Gómez</p>
+			<p>Unisangil &copy</p>
+			<p>2013</p>
+		</footer>
+	</body>
+</html>

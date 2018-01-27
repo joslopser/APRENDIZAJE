@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block titulo %} siova: {{categoria.nombre_ruta|capfirst}} {% endblock %}
+{% block itemMenu %}
+{% if usuario.profile.rol = 'rdoc' %}
+	<li><a class="menusbtn" href="/docente">Objetos</a></li>
+{% endif %}
+{% endblock %}
+{% block itemMenuUs %}
+	<li class="menusubtn">Bienvenido/a, {{usuario.first_name|capfirst}}&nbsp&nbsp</li>
+	{% if usuario %}
+		<li><a class="menusubtn" href="/cerrar">Salir</a></li>
+	{% else %}
+		<li><a class="menusubtn" href="/ingresar">Ingresar</a></li>
+	{% endif %}
+{% endblock %}
+{% block itemNav %}
+	<li><a href="/">Inicio</a></li>
+	{% if abuelo %}
+		> <li><a href="/categoria/{{abuelo.id}}">{{abuelo.nombre_ruta|title}}</a></li>
+	{% endif %}
+	{% if padre %}
+		> <li><a href="/categoria/{{padre.id}}">{{padre.nombre_ruta|title}}</a></li>
+	{% endif %}
+{% endblock %}
+{% block contenidoIzq %}
+	<div class="titulo_item" id="tit_obj">
+		<p>{{categoria.nombre_ruta|capfirst}}</p>
+	</div>
+{% endblock %}
+{% block contenidoDer %}
+	<ul id="rcontenidos">
+		{% for c1 in catn1 %}
+			<li><a href="/categoria/{{c1.id}}">
+				{{c1.nombre_ruta|title}}
+			</a></li>
+		{% endfor %}
+	</ul>
+	<hr>
+	<ul id="ocontenidos">
+		{% for obj in objetos %}
+			<li><a href="/objeto/{{obj.id}}">{{obj|title}}</a></li>
+		{% empty %}
+			<li>No hay Objetos en esta categoría.</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
