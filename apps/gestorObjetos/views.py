@@ -124,3 +124,24 @@ def privado(request):
 					catn3.append(d1)
 	formulario=cEspecificacionForm
 	return render_to_response('privado.html',{'usuario':request.user, 'form':formulario, 'repos':repositorios, 'objetos':objetos, 'catn1':catn1, 'catn2':catn2, 'catn3':catn3},context_instance=RequestContext(request))
+
+#@login_required(login_url='/ingresar')
+def categoria(request, id_categoria):
+	"""
+	Vista que despliega las sub categorías y objetos pretenecientes a dicha catagoría.
+	"""
+	padre=None
+	abuelo=None
+	categoria = RutaCategoria.objects.get(pk=id_categoria)
+	catn1 = list(RutaCategoria.objects.filter(cat_padre=categoria))
+	padre = categoria.cat_padre
+	if padre:
+		abuelo = padre.cat_padre
+	if request.user.is_authenticated():
+		objetos = Objeto.objects.filter(ruta_categoria=categoria).filter(repositorio__grupos=request.user.groups.all()).filter(publicado=True) | Objeto.objects.filter(ruta_categoria=categoria).filter(repositorio__publico=True).filter(publicado=True)
+		objetos = list(set(objetos)) #quitar duplicados en la lista
+		data={'usuario':request.user, 'categoria':categoria, 'objetos':objetos, 'catn1':catn1, 'padre':padre, 'abuelo':abuelo}
+	else:
+		objetos = Objeto.objects.filter(ruta_categoria=categoria).filter(publicado=True).filter(repositorio__publico=True)
+		data={'usuario':False,'categoria':categoria, 'objetos':objetos, 'catn1':catn1, 'padre':padre, 'abuelo':abuelo}
+	return render_to_response('categoria.html',data,context_instance=RequestContext(request))
