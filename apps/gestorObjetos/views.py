@@ -1,8 +1,9 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response , get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
+import repositorio.lib.Opciones as opc
 from django.contrib.auth import login, authenticate, logout
 from apps.gestorObjetos.forms import EspecificacionForm, cEspecificacionForm, ObjetosForm, cObjetosForm
 from apps.gestorObjetos.models import Repositorio, Objeto, Autor, RutaCategoria, EspecificacionLOM, PalabraClave
@@ -145,3 +146,38 @@ def categoria(request, id_categoria):
 		objetos = Objeto.objects.filter(ruta_categoria=categoria).filter(publicado=True).filter(repositorio__publico=True)
 		data={'usuario':False,'categoria':categoria, 'objetos':objetos, 'catn1':catn1, 'padre':padre, 'abuelo':abuelo}
 	return render_to_response('categoria.html',data,context_instance=RequestContext(request))
+
+
+#@login_required(login_url='/ingresar')
+def objeto(request, id_objeto):
+	"""
+	En esta vista se desplegarán la información del Objeto seleccionado
+	"""
+	obj=get_object_or_404(Objeto, pk=id_objeto)#anteriormente tenía obj=Objeto.objects.get(pk=id_objeto), lo cual generaba un error 500 al no encontrarlo, por eso la mejor opción es esta
+	gruposobj = obj.repositorio.grupos.all()
+	gruposu = request.user.groups.all()
+	puedever=False
+	for go in gruposobj:
+		for gu in gruposu:
+			if go == gu:
+				puedever=True
+	if puedever | obj.repositorio.publico:
+		idiom={}
+		nivel_a={}
+		format={}
+		tipo_i={}
+		nivel_i={}
+		contex={}
+		[idiom.update({k:v}) for k,v in opc.get_idiomas()]
+		[nivel_a.update({k:v}) for k,v in opc.get_nivel_agregacion()]
+		[format.update({k:v}) for k,v in opc.get_tipo_recurso()]
+		[tipo_i.update({k:v}) for k,v in opc.get_tipo_interactividad()]
+		[nivel_i.update({k:v}) for k,v in opc.get_nivel_interactividad()]
+		[contex.update({k:v}) for k,v in opc.get_contexto()]
+		if request.user.is_authenticated():
+			data={'usuario':request.user, 'objeto':obj, 'espec':obj.espec_lom, 'autores':obj.autores.all(), 'keywords':obj.palabras_claves.all(),'idioma':idiom[obj.espec_lom.lc1_idioma],'niv_agr':nivel_a[obj.espec_lom.lc1_nivel_agregacion],'formato':format[obj.espec_lom.lc4_tipo_rec],'tipo_i':tipo_i[obj.espec_lom.lc4_tipo_inter],'nivel_i':nivel_i[obj.espec_lom.lc4_nivel_inter],'context':contex[obj.espec_lom.lc4_contexto]}
+		else:
+			data={'objeto':obj, 'espec':obj.espec_lom, 'autores':obj.autores.all(), 'keywords':obj.palabras_claves.all(),'idioma':idiom[obj.espec_lom.lc1_idioma],'niv_agr':nivel_a[obj.espec_lom.lc1_nivel_agregacion],'formato':format[obj.espec_lom.lc4_tipo_rec],'tipo_i':tipo_i[obj.espec_lom.lc4_tipo_inter],'nivel_i':nivel_i[obj.espec_lom.lc4_nivel_inter],'context':contex[obj.espec_lom.lc4_contexto]}
+		return render_to_response('objeto.html',data,context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')
