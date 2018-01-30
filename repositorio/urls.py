@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import patterns, url, include
 from django.contrib import admin
 
-from apps.gestorObjetos import urls
+admin.autodiscover()
 
 urlpatterns = [
     url(r'^', include('apps.gestorObjetos.urls')),

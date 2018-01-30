@@ -1,5 +1,5 @@
 from django.conf.urls import url, include, patterns
-from apps.gestorObjetos.views import index, ingresar, principal, privado, categoria, objeto
+from apps.gestorObjetos.views import index, ingresar, principal, privado, categoria, objeto, cerrar
 
 
 urlpatterns = [
@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^privado/', privado),
     url(r'^categoria/(?P<id_categoria>\d+)$', categoria),
     url(r'^objeto/(?P<id_objeto>\d+)$',objeto),
+    url(r'^cerrar/$', cerrar),
 ]
 

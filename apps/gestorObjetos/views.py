@@ -181,3 +181,11 @@ def objeto(request, id_objeto):
 		return render_to_response('objeto.html',data,context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect('/')
+
+@login_required(login_url='/ingresar')
+def cerrar(request):
+	"""
+	Vista que permite cerrar sesión de manera segura en el sistema.
+	"""
+	logout(request)
+	return HttpResponseRedirect('/')
