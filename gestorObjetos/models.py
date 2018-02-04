@@ -44,6 +44,9 @@ class Repositorio(models.Model):
     def __unicode__(self):
         return self.nombre
 
+    def __str__(self):
+        return '{}'.format(self.nombre)
+
 
 class Autor(models.Model):
     """
@@ -65,6 +68,9 @@ class Autor(models.Model):
 
     def __unicode__(self):
         return self.nombres + ' ' + self.apellidos
+
+    def __str__(self):
+        return '{}'.format(self.nombres)
 
 
 class AutorAdmin(admin.ModelAdmin):
@@ -186,6 +192,9 @@ class EspecificacionLOM(models.Model):
     def __unicode__(self):
         return self.lc1_titulo
 
+    def __str__(self):
+        return '{}'.format(self.lc1_titulo)
+
 
 class Objeto(models.Model):
     """
@@ -223,7 +232,10 @@ class Objeto(models.Model):
     #proyecto = models.OneToOneField(Proyecto, help_text='proyecto tomado como objeto.', blank=True, null=True)
 
     def __unicode__(self):
-        return self.espec_lom.lc1_titulo
+       return self.espec_lom.lc1_titulo
+
+    def __str__(self):
+        return '{}'.format(self.espec_lom.lc1_titulo)
 
 
 """
@@ -269,6 +281,9 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return self.user.first_name
+
+    def __str__(self):
+        return '{}'.format(self.user.first_name)
 
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

@@ -19,7 +19,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^', include('apps.gestorObjetos.urls')),
+    url(r'^', include('gestorObjetos.urls')),
     url(r'^admin/', admin.site.urls),
     #url(r'^index/$', include('apps.gestorObjetos.urls')),
 

@@ -184,6 +184,7 @@ function arranque(name) {
         nin = $('#id_c_nivel_inter').val();
         if($('#v_nin:checked').val()){v_nin = $('#v_nin:checked').val();}else{v_nin = "False";}
         /*****Proyectos*****/
+        //var pfas = 0;
         pfas = $('#id_c_pro_fase').val();
         if($('#v_pfas:checked').val()){v_pfas = $('#v_pfas:checked').val();}else{v_pfas = "False";}
         ppro = $('#id_c_pro_prog').val();
