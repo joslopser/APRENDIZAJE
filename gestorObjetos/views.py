@@ -46,7 +46,7 @@ def ingresar(request):
 					if request.user.profile.rol == "radm":
 						return HttpResponseRedirect('/admin')
 					else:
-						return HttpResponseRedirect('/docente')
+						return HttpResponseRedirect('/privado')
 				else:
 					return render_to_response('noactivo.html', context_instance=RequestContext(request))
 			else:
