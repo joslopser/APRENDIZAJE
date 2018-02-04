@@ -207,7 +207,7 @@ def buscar(request):
 		d=rob+spec
 		json_serializer = serializers.get_serializer("json")()
 		data = json_serializer.serialize(d, ensure_ascii=False)
-		return HttpResponse(data, mimetype='application/json')
+		return HttpResponse(data, content_type ='application/json')
 	else:
 		return render_to_response('privado.html', {'error': True},context_instance=RequestContext(request))
 
@@ -271,7 +271,7 @@ def busqueda(request):
 	d=rob+spec
 	json_serializer = serializers.get_serializer("json")()
 	data = json_serializer.serialize(d, ensure_ascii=False)
-	return HttpResponse(data, mimetype='application/json')
+	return HttpResponse(data, content_type='application/json')
 
 
 @login_required(login_url='/ingresar')
@@ -435,7 +435,7 @@ def crearAutor(request):
 	laut.append(objAutor)
 	json_serializer = serializers.get_serializer("json")()
 	data = json_serializer.serialize(laut, ensure_ascii=False)
-	return HttpResponse(data, mimetype='application/json')
+	return HttpResponse(data, content_type='application/json')
 
 """
 Vista que permite gestionar la descarga del objeto dependiendo de los permisos que tenga
