@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^categoria/(?P<id_categoria>\d+)$', categoria),
     url(r'^docente/$', docObjeto),
     url(r'^descarga/(?P<id>.+)$', download),
-    url(r'^editObjeto/objetos/(?P<id>.+)$', downloadEdit),
+    url(r'^editObjeto/objeto/(?P<id_objeto>\d+)$', editObjeto),
     url(r'^admin/gestorObjetos/objeto/(?P<id>.+)/objetos/.+$', download),
     url(r'^admin/logout/$', redirige),
 ]

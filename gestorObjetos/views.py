@@ -346,7 +346,7 @@ def editObjeto(request,id_objeto):
 	"""
 	Vista de acceso al usuario con rol de Docente, de esta manera se le permitirá modificar objetos
 	"""
-	obj=get_object_or_404(Objeto, pk=id_objeto)
+	obj=get_object_or_404(Objeto, pk=int(id_objeto))
 	kws=obj.palabras_claves.all()#palabras claves del objeto
 	if request.user.profile.rol == 'rdoc':
 		if obj.creador == request.user:

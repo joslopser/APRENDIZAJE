@@ -3,5 +3,6 @@
 __pycache__
 venvpp
 objetos
+settings.py
 gestorObjetos/migrations
 gestorProyectos/migrations

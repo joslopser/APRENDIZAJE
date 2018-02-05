@@ -11,7 +11,7 @@ class Grado(models.Model):
 	def __unicode__(self):
 		return self.get_nominacion_display()
 	def __str__(self):
-		return '{}'.format(self.nominacion)
+		return '{}'.format(self.get_nominacion_display())
 
 
 class Facultad(models.Model):
