@@ -31,4 +31,4 @@ def ver_proyecto(request):
 	d=met2+pro2+au2
 	json_serializer = serializers.get_serializer("json")()
 	data = json_serializer.serialize(d, ensure_ascii=False)
-	return HttpResponse(data, mimetype='application/json')
+	return HttpResponse(data, contaner_type ='application/json')

@@ -12,7 +12,7 @@ class ValidarForm(ModelForm):
 	class Meta:
 		model=Validacion
 		#modificación de cada uno de los campos que se muestran en la plantilla para que tengan un tamaño fijo
-		exclude=('proyecto')
+		exclude=('proyecto',)
 		widgets = {
 			'observaciones': Textarea(attrs={'cols': 40, 'rows': 2}),
 			'valoracion': forms.RadioSelect(),

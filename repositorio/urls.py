@@ -21,6 +21,8 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^', include('gestorObjetos.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^', include('gestorProyectos.urls')),
+    #url(r'^admin/', admin.site.urls),
     #url(r'^index/$', include('apps.gestorObjetos.urls')),
 
 ]

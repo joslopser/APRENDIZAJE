@@ -27,6 +27,9 @@ class PalabraClave(models.Model):
     def __unicode__(self):
         return self.palabra_clave
 
+    def __str__(self):
+        return '{}'.format(self.palabra_clave)
+
 
 class Repositorio(models.Model):
     """
@@ -103,6 +106,9 @@ class RutaCategoria(models.Model):
         # return ' | '.join([self.cat_padre.nombre_ruta,  self.nombre_ruta, ])
         # else:
         # return self.nombre_ruta
+
+    def __str__(self):
+        return '{}'.format(self.nombre_ruta)
 
 
 class EspecificacionLOM(models.Model):

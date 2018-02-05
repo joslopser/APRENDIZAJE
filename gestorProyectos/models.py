@@ -10,6 +10,9 @@ class Grado(models.Model):
 	descripcion = models.TextField(help_text="Descripción del grado escolar", verbose_name='Descripción', blank=True)
 	def __unicode__(self):
 		return self.get_nominacion_display()
+	def __str__(self):
+		return '{}'.format(self.nominacion)
+
 
 class Facultad(models.Model):
 	"""
@@ -20,6 +23,8 @@ class Facultad(models.Model):
 		verbose_name_plural= "Facultades"
 	def __unicode__(self):
 		return self.nombre
+	def __str__(self):
+		return '{}'.format(self.nombre)
 
 class Programa(models.Model):
 	"""
@@ -31,6 +36,10 @@ class Programa(models.Model):
 	facultad = models.ForeignKey(Facultad, help_text="Nombre de la facultad", verbose_name= 'Facultad', blank=False)
 	def __unicode__(self):
 		return self.nombre
+
+	def __str__(self):
+		return '{}'.format(self.nombre)
+
 
 class Factor_competencias(models.Model):
 	"""
@@ -44,6 +53,9 @@ class Factor_competencias(models.Model):
 	def __unicode__(self):
 		return self.factor
 
+	def __str__(self):
+		return '{}'.format(self.factor)
+
 class Enunciado(models.Model):
 	"""
     Modelo que representa los enunciados que pueden o no pertenecer a cada :model:'gestorProyectos:Factor_competencias'
@@ -56,6 +68,9 @@ class Enunciado(models.Model):
 		order_with_respect_to = 'factor'
 	def __unicode__(self):
 		return self.enunciado
+
+	def __str__(self):
+		return '{}'.format(self.enunciado)
 
 class Indicador(models.Model):
 	"""
@@ -72,6 +87,9 @@ class Indicador(models.Model):
 	def __unicode__(self):
 		return self.indicador
 
+	def __str__(self):
+		return '{}'.format(self.indiadores)
+
 class Parametro(models.Model):
 	"""
 	Modelo que representa los parámetros de validación pedagógica
@@ -86,6 +104,9 @@ class Parametro(models.Model):
 	def __unicode__(self):
 		return self.nombre
 
+	def __str__(self):
+		return '{}'.format(self.nombre)
+
 class OperacionMental(models.Model):
 	"""
 	Modelo que representa las operaciones mentales básicas las cuales pueden ser asociadas a los proyectos académicos
@@ -97,6 +118,9 @@ class OperacionMental(models.Model):
 		verbose_name_plural= "Operaciones Mentales"
 	def __unicode__(self):
 		return self.operacion
+
+	def __str__(self):
+		return '{}'.format(self.operacion)
 
 class Proyecto(models.Model):
 	"""
@@ -115,6 +139,9 @@ class Proyecto(models.Model):
 	def __unicode__(self):
 		return self.titulo
 
+	def __str__(self):
+		return '{}'.format(self.titulo)
+
 
 class Validacion(models.Model):
 	"""
@@ -131,3 +158,6 @@ class Validacion(models.Model):
 		verbose_name_plural= "Validaciones"
 	def __unicode__(self):
 		return self.parametro.nombre
+
+	def __str__(self):
+		return '{}'.format(self.parametro.nombre)
