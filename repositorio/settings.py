@@ -126,6 +126,12 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(RUTA_PROYECTO,'plantillas'),
 )
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST ='smtp.gmail.com'
+EMAIL_PORT =587
+EMAIL_HOST_USER='repositoriolibres@gmail.com'
+EMAIL_HOST_PASSWORD='repositoriolibres100'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -141,7 +147,7 @@ INSTALLED_APPS = (
     'gestorObjetos',
     'gestorProyectos',
     'filetransfers',
-
+    'bootstrapform',
 )
 
 # A sample logging configuration. The only tangible logging

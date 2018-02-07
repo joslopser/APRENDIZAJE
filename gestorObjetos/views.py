@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response , get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, render
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -11,11 +11,17 @@ import repositorio.lib.Opciones as opc
 from django.contrib.auth import login, authenticate, logout
 from gestorObjetos.forms import cEspecificacionForm
 from gestorObjetos.models import Repositorio, Objeto, Autor, RutaCategoria, EspecificacionLOM, PalabraClave
-from gestorObjetos.forms import EspecificacionForm, cEspecificacionForm, ObjetosForm, cObjetosForm
+from gestorObjetos.forms import EspecificacionForm, cEspecificacionForm, ObjetosForm, cObjetosForm, ContactForm
 import datetime
 import operator
 from filetransfers.api import serve_file
-
+from django.core.mail import EmailMessage
+from django.views.generic import FormView
+from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+from .forms import ContactForm
 
 def index(request):
     return HttpResponse("index")
@@ -499,3 +505,27 @@ def redirige(request):
 	Vista que permite redirigir hacia la página principal.
 	"""
 	return HttpResponseRedirect('/')
+
+
+def send_email(request):
+	if request.method == 'POST':
+		form = ContactForm(request.POST)
+		if form.is_valid():
+			contenido='Bienvenido al Repositorio de Objetos de Aprendizaje\nSus credenciales de acceso son:\nusuario: docente5, contrasena: doc51357'
+			data = form.cleaned_data
+			send_mail(
+				data['Asunto'],
+				contenido,
+				'repositoriolibres@mail.com',  # FROm
+				[data['Email']],
+				fail_silently=False,
+			)
+			return HttpResponseRedirect('/thanks/')
+	else:
+		form = ContactForm()
+
+	return render(request, 'contact.html', {'form': form})
+
+
+def thanks(request):
+	return render(request, 'thanks.html')

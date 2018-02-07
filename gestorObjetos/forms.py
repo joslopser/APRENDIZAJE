@@ -7,6 +7,7 @@ from django.forms.widgets import ClearableFileInput
 from gestorObjetos.models import EspecificacionLOM, Objeto, Repositorio
 from gestorProyectos.models import Programa, Grado
 import repositorio.lib.Opciones as opc
+from django import forms
 """
 Formulario basado en el modelo EspecificacionLOM
 """
@@ -84,3 +85,9 @@ class cObjetosForm(ModelForm):
 	#Se crean los campos específicos para mostrar un comportamiento distinto al esperado.
 	palabras_claves = forms.CharField(max_length=500, required=False, label="Palabras", help_text='Palabras Asociadas al Objeto')
 	archivo= forms.FileField(widget=AdminFileWidget, label="Archivo", help_text='Archivo del Objeto')
+
+class ContactForm(forms.Form):
+    Asunto = forms.CharField(max_length=100)
+    Nombre = forms.CharField(max_length=100, required=False)
+    Email = forms.EmailField()
+    Contenido = forms.CharField(widget=forms.Textarea)

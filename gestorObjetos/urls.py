@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from gestorObjetos.views import index, ingresar, redirige, downloadEdit, docObjeto, download, crearAutor, editObjeto, principal, privado, categoria, objeto, cerrar, buscar, busqueda
+from gestorObjetos.views import send_email,thanks, index, ingresar, redirige, downloadEdit, docObjeto, download, crearAutor, editObjeto, principal, privado, categoria, objeto, cerrar, buscar, busqueda
 
 
 urlpatterns = [
@@ -22,5 +22,7 @@ urlpatterns = [
     url(r'^editObjeto/objeto/(?P<id_objeto>\d+)$', editObjeto),
     url(r'^admin/gestorObjetos/objeto/(?P<id>.+)/objetos/.+$', download),
     url(r'^admin/logout/$', redirige),
+    url(r'^email/$', send_email),
+    url(r'^thanks/$', thanks),
 ]
 

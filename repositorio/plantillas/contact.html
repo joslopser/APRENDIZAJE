@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block titulo %} Solicitar credenciales {% endblock %}
+{% block itemNav %}<li><a href="/">Inicio</a></li>{% endblock %}
+
+{% block contenidoIzq %}
+<div class="container">
+    <div class="row">
+        <h2 class="text-center text-muted">Solicitar credenciales </h2>
+        <form method="POST" action="" novalidate="novalidate">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="ENVIAR" class="btn btn-success pull-right">
+        </form>
+    </div>
+</div>
+{% endblock %}
