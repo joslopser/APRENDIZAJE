@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block titulo %} repositorio: Ingresar {% endblock %}
-{% block itemNav %}<li><a href="/">Inicio</a></li>
-<li><a href="/email">  SOLICITAR CREDENCIALES DE ACCESO </a></li>{% endblock %}
+{% block itemNav %}
+<li><a href="/">Inicio</a></li>
+<li><a href="/">       </a></li>
+<li><a href="/email">  Registrarse </a></li>{% endblock %}
 {% block contenidoIzq %}
 	<form id='formulario' method='post' action=''>{% csrf_token %}
 		{{formulario.as_p}}

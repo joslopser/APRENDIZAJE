@@ -27,7 +27,7 @@
     </ul>
 {% endif %}
 {% block contenidoIzq %}
-	<div class="submenu" id="submenu1">Repositorios</div>
+	<div class="submenu" id="submenu1">Carreras</div>
 	<div class="submenu_" id="submenu2">Categorias</div>
 	<div id="contenidosm1">
 		<ul id="rcontenidos">
@@ -47,7 +47,7 @@
 				</ul>
 				<hr><br>
 			{% empty %}
-				<li>No hay repositorios registrados aún.</li>
+				<li>No hay carreras/facultades registradas aún.</li>
 			{% endfor %}
 		</ul>
 	</div>
@@ -127,21 +127,13 @@
 		        <label for="id_c_fecha">Fecha de publicación:</label>
 		        {{ form.c_fecha }}
 		    </p>
-		    <p>
-		    	<input type="checkbox" id="v_tin" name="v_tin" value="True">
-		        <label for="id_c_tipo_inter">Tipo de Interactividad:</label>
-		        {{ form.c_tipo_inter }}
-		    </p>
+
 		    <p>
 		    	<input type="checkbox" id="v_tre" name="v_tre" value="True">
 		        <label for="id_c_tipo_rec">Tipo de Recurso:</label>
 		        {{ form.c_tipo_rec }}
 		    </p>
-		    <p>
-		    	<input type="checkbox" id="v_nin" name="v_nin" value="True">
-		        <label for="id_c_nivel_inter">Nivel de Interactividad:</label>
-		        {{ form.c_nivel_inter }}
-			</p>
+
 			{% if usuario.profile.rol = 'rcat' or usuario.profile.rol = 'rrev'%}
 				Asociados al proyecto
 				<p>

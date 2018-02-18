@@ -1,6 +1,8 @@
 import os
 import uuid
 from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+import zipfile
 
 def get_file_path(instance, filename):
 	"""
@@ -26,3 +28,16 @@ def get_file_storage():
 	"""
 	fs = FileSystemStorage(location='/')
 	return fs
+
+def handle_uploaded_file(f):
+	with open(settings.MEDIA_ROOT+'\\index\\'+f.name, 'wb') as destination:
+		print(f.name)
+		for linea in f:
+			destination.write(linea)
+		destination.close()
+
+def descomprimir(fzip):
+	fantasy_zip = zipfile.ZipFile(settings.MEDIA_ROOT+'\\index\\'+fzip.name) #ubicacion del zip
+	fantasy_zip.extract('index.html', settings.MEDIA_ROOT+'\\index') #archEspecifico, ubicacionFinal
+
+	fantasy_zip.close()

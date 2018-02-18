@@ -6,10 +6,10 @@
 <div class="container">
     <div class="row">
         <h2 class="text-center text-muted">Solicitar credenciales </h2>
-        <form method="POST" action="" novalidate="novalidate">
+        <form id="formulario" method="POST" action="" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="ENVIAR" class="btn btn-success pull-right">
+            <input class="menusbtn" type="submit" value="ENVIAR" class="btn btn-success pull-right">
         </form>
     </div>
 </div>

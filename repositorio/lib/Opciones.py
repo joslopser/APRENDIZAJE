@@ -45,9 +45,9 @@ def get_nivel_agregacion():
     N4 = 'N4'
     NIVEL_AGREGACION_CHOICES = (
         (N1, 'Recursos Digitales'),
-        (N2, 'Colección de Recursos'),
-        (N3, 'Colección de Lecciones'),
-        (N4, 'Colección de Cursos'),
+        #(N2, 'Colección de Recursos'),
+        #(N3, 'Colección de Lecciones'),
+        #(N4, 'Colección de Cursos'),
     )
     return NIVEL_AGREGACION_CHOICES
 
@@ -67,11 +67,10 @@ def get_contexto():
 	C3 = 'EMed'
 	C4 = 'ESup'
 	C5 = 'ETra'
-	CONTEXTO_CHOICES = ((C1, 'Educación Preescolar'),
-		(C2, 'Educación Básica'),
-		(C3, 'Educación Media'),
-		(C4, 'Educación Superior'),
-		(C5, 'Educación para el Trabajo'),)
+	CONTEXTO_CHOICES = (
+		(C1, 'Educación Básica'),
+		(C2, 'Educación Media'),
+		(C3, 'Educación Superior'),)
 	return CONTEXTO_CHOICES
 
 def get_nivel_interactividad():
@@ -130,6 +129,16 @@ def get_roles():
 		(RADM, 'Administrador'),
 		(RCAT, 'Catalogador'),
 		(RREV, 'Revisor'),
+	)
+	return ROLE_CHOICES
+
+def get_roles_registro_usu():
+	REST = 'rest'
+	RDOC = 'rdoc'
+
+	ROLE_CHOICES = (
+		(REST, 'Estudiante'),
+		(RDOC, 'Docente'),
 	)
 	return ROLE_CHOICES
 

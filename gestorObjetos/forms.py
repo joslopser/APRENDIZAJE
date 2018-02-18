@@ -4,10 +4,12 @@ from django import forms
 import datetime
 from django.contrib.admin.widgets import AdminFileWidget
 from django.forms.widgets import ClearableFileInput
-from gestorObjetos.models import EspecificacionLOM, Objeto, Repositorio
+from gestorObjetos.models import EspecificacionLOM, Objeto, Repositorio, RutaCategoria
 from gestorProyectos.models import Programa, Grado
 import repositorio.lib.Opciones as opc
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+
 """
 Formulario basado en el modelo EspecificacionLOM
 """
@@ -19,13 +21,14 @@ class EspecificacionForm(forms.ModelForm):
 		widgets = {
 			'lc1_titulo': TextInput(attrs={'size': 40}),
             'lc1_descripcion': Textarea(attrs={'cols': 40, 'rows': 5}),
-            'lc1_cobertura': Textarea(attrs={'cols': 40, 'rows': 5}),
-            'lc2_version': TextInput(attrs={'size': 40}),
-            'lc3_requerimientos': Textarea(attrs={'cols': 40, 'rows': 5}),
-            'lc3_instrucciones': Textarea(attrs={'cols': 40, 'rows': 5}),
-            'lc4_poblacion': Textarea(attrs={'cols': 40, 'rows': 5}),
-            'lc5_derechos': Textarea(attrs={'cols': 40, 'rows': 5}),
-            'lc6_uso_educativo': Textarea(attrs={'cols': 40, 'rows': 5}),
+			''
+            #'lc1_cobertura': Textarea(attrs={'cols': 40, 'rows': 5}),
+            #'lc2_version': TextInput(attrs={'size': 40}),
+            #'lc3_requerimientos': Textarea(attrs={'cols': 40, 'rows': 5}),
+            #'lc3_instrucciones': Textarea(attrs={'cols': 40, 'rows': 5}),
+            #'lc4_poblacion': Textarea(attrs={'cols': 40, 'rows': 5}),
+            'lc5_derechos': Textarea(attrs={'cols': 40, 'rows': 2}),
+            #'lc6_uso_educativo': Textarea(attrs={'cols': 40, 'rows': 5}),
         }
     # Reemplazo del campo de idioma para que tenga un comportamiento común
 	lc1_idioma = forms.CharField(max_length=2,widget=forms.Select(choices=opc.get_idiomas()), label="Idioma", help_text='Lenguaje predominante en el objeto')
@@ -39,11 +42,11 @@ class cEspecificacionForm(forms.Form):
 	c_titulo = forms.CharField(max_length=200)
 	c_tipo_obj = forms.CharField(max_length=3,widget=forms.Select(choices=opc.get_tipo_obj()))
 	c_idioma = forms.CharField(max_length=2,widget=forms.Select(choices=opc.get_idiomas()))
-	c_nivel_agregacion = forms.CharField(max_length=2,widget=forms.Select(choices=opc.get_nivel_agregacion()))
+	#c_nivel_agregacion = forms.CharField(max_length=2,widget=forms.Select(choices=opc.get_nivel_agregacion()))
 	c_fecha = forms.DateField(initial=datetime.date.today)
-	c_tipo_inter = forms.CharField(max_length=3,widget=forms.Select(choices=opc.get_tipo_interactividad()))
+	#c_tipo_inter = forms.CharField(max_length=3,widget=forms.Select(choices=opc.get_tipo_interactividad()))
 	c_tipo_rec = forms.CharField(max_length=50,widget=forms.Select(choices=opc.get_tipo_recurso()))
-	c_nivel_inter = forms.CharField(max_length=3,widget=forms.Select(choices=opc.get_nivel_interactividad()))
+	#c_nivel_inter = forms.CharField(max_length=3,widget=forms.Select(choices=opc.get_nivel_interactividad()))
 	c_pro_fase = forms.CharField(max_length=2,widget=forms.Select(choices=opc.get_fase()))
 	c_pro_prog = forms.ModelChoiceField(queryset=Programa.objects.all())
 	c_pro_calif = forms.CharField(max_length=1,widget=forms.Select(choices=opc.get_calif()))
@@ -86,8 +89,27 @@ class cObjetosForm(ModelForm):
 	palabras_claves = forms.CharField(max_length=500, required=False, label="Palabras", help_text='Palabras Asociadas al Objeto')
 	archivo= forms.FileField(widget=AdminFileWidget, label="Archivo", help_text='Archivo del Objeto')
 
-class ContactForm(forms.Form):
-    Asunto = forms.CharField(max_length=100)
-    Nombre = forms.CharField(max_length=100, required=False)
+"""
+Formulario para creacion de usuarios
+"""
+class RegistarUsuarioForm(forms.Form):
+    Usuario = forms.CharField(max_length=100,required=True )
+    Nombre = forms.CharField(max_length=100, required=True)
+    Apellido = forms.CharField(max_length=100, required=True)
+    RolUsu = forms.CharField(widget=forms.Select(choices=opc.get_roles_registro_usu()), label="Tipo de usuario")
     Email = forms.EmailField()
-    Contenido = forms.CharField(widget=forms.Textarea)
+
+class CatalogacionExeLearning(forms.Form):
+	Categoria = forms.ModelChoiceField(queryset=RutaCategoria.objects.all())
+	#archivoIndex = forms.FileField(widget=AdminFileWidget, label="Archivo index", help_text='Cargar el archivo index.html')
+	archivoObjeto = forms.FileField(widget=AdminFileWidget, label="Archivo del objeto",
+								   help_text='Cargar el archivo comprimido(.zip) del objeto de aprendizaje')
+	#archivos = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+
+
+
+
+
+
+

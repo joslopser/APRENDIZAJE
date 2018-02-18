@@ -7,3 +7,4 @@ objetos
 settings.py
 gestorObjetos/migrations
 gestorProyectos/migrations
+repositorio/media

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block titulo %} Catalogación con ExeLearning {% endblock %}
+{% block itemMenu %}
+    {% if usuario.profile.rol = 'rdoc' %}
+        <li><a class="menusbtn" href="/docente">Objetos</a></li>
+    {% endif %}
+{% endblock %}
+{% block itemMenuUs %}
+   <li class="menusubtn">Bienvenido/a, {{usuario.first_name|capfirst}}&nbsp&nbsp</li>
+    <li><a class="menusubtn" href="/cerrar">Salir</a></li>
+{% endblock %}
+{% block itemNav %}
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/docente">Objetos</a></li>
+{% endblock %}
+
+{% block contenidoIzq %}
+<div class="titulos" id="titulo">Catalogación</div>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if errores %}
+                <p class="errores">Hay un error con el formulario</p>
+        {% endif%}
+        {% if l_errores %}
+            {% for err in l_errores %}
+                <p class="errores">{{err}}</p>
+            {% endfor %}
+        {% endif%}
+	<form id="formulario" method="post" enctype="multipart/form-data" action="">{% csrf_token %}
+		{{ form.as_p }}
+        {{ formObj.as_p }}
+
+        <span class="helptext"> :( </span>
+
+		<p class="btnInferior"><input class="descarga" id="crearObj" type="submit" value="Crear Objeto"/></p>
+	</form>
+{% endblock %}

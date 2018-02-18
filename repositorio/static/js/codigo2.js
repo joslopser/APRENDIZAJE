@@ -14,16 +14,8 @@ function arranque(name) {
     $("#id_c_titulo").prop('disabled',true);
     $("#id_c_tipo_obj").prop('disabled',true);
     $("#id_c_idioma").prop('disabled',true);
-    //$("#id_c_nivel_agregacion").prop('disabled',true);
     $("#id_c_fecha").prop('disabled',true);
-    //$("#id_c_tipo_inter").prop('disabled',true);
     $("#id_c_tipo_rec").prop('disabled',true);
-    //$("#id_c_nivel_inter").prop('disabled',true);
-    $("#id_c_pro_fase").prop('disabled',true);
-    $("#id_c_pro_prog").prop('disabled',true);
-    $("#id_c_pro_calif").prop('disabled',true);
-    $("#id_c_pro_fecha").prop('disabled',true);
-    $("#id_c_pro_gra").prop('disabled',true);
 
     $("#v_tit").click(function(){
         if($("#v_tit").is(':checked')){
@@ -49,14 +41,6 @@ function arranque(name) {
         }
     });
 
-    /*$("#v_nag").click(function(){
-        if($("#v_nag").is(':checked')){
-            $("#id_c_nivel_agregacion").prop('disabled',false);
-        }else{
-            $("#id_c_nivel_agregacion").prop('disabled',true);
-        }
-    });*/
-
     $("#v_fec").click(function(){
         if($("#v_fec").is(':checked')){
             $("#id_c_fecha").prop('disabled',false);
@@ -64,14 +48,6 @@ function arranque(name) {
             $("#id_c_fecha").prop('disabled',true);
         }
     });
-    /*
-    $("#v_tin").click(function(){
-        if($("#v_tin").is(':checked')){
-            $("#id_c_tipo_inter").prop('disabled',false);
-        }else{
-            $("#id_c_tipo_inter").prop('disabled',true);
-        }
-    });*/
 
     $("#v_tre").click(function(){
         if($("#v_tre").is(':checked')){
@@ -80,67 +56,18 @@ function arranque(name) {
             $("#id_c_tipo_rec").prop('disabled',true);
         }
     });
-    /*
-    $("#v_nin").click(function(){
-        if($("#v_nin").is(':checked')){
-            $("#id_c_nivel_inter").prop('disabled',false);
-        }else{
-            $("#id_c_nivel_inter").prop('disabled',true);
-        }
-    });*/
-
-    $("#v_pfas").click(function(){
-        if($("#v_pfas").is(':checked')){
-            $("#id_c_pro_fase").prop('disabled',false);
-        }else{
-            $("#id_c_pro_fase").prop('disabled',true);
-        }
-    });
-
-    $("#v_ppro").click(function(){
-        if($("#v_ppro").is(':checked')){
-            $("#id_c_pro_prog").prop('disabled',false);
-        }else{
-            $("#id_c_pro_prog").prop('disabled',true);
-        }
-    });
-
-    $("#v_pcal").click(function(){
-        if($("#v_pcal").is(':checked')){
-            $("#id_c_pro_calif").prop('disabled',false);
-        }else{
-            $("#id_c_pro_calif").prop('disabled',true);
-        }
-    });
-
-    $("#v_pfec").click(function(){
-        if($("#v_pfec").is(':checked')){
-            $("#id_c_pro_fecha").prop('disabled',false);
-        }else{
-            $("#id_c_pro_fecha").prop('disabled',true);
-        }
-    });
-
-    $("#v_pgra").click(function(){
-        if($("#v_pgra").is(':checked')){
-            $("#id_c_pro_gra").prop('disabled',false);
-        }else{
-            $("#id_c_pro_gra").prop('disabled',true);
-        }
-    });
 
     // termina
 
     /* Interacciones con JQueryUI*/
     //$("#rcontenidos").accordion({ active: 2 });
     $("#id_c_fecha" ).datepicker({dateFormat:'dd/mm/yy'});
-    $("#id_c_pro_fecha" ).datepicker({dateFormat:'dd/mm/yy'});
     $("#id_lc2_fecha" ).datepicker({dateFormat:'dd/mm/yy'});
     $("#id_fecha" ).datepicker({dateFormat:'dd/mm/yy'});
 
     /*************Interacciones con AJAX*****************/
     $('#busca').click(function(e) {
-        e.preventDefault();
+        e.defaultPrevented;//preventDefault();
         qu = $('#q').val();
         if (qu==""){
             $("#results1").empty();
@@ -173,32 +100,17 @@ function arranque(name) {
         if($('#v_tob:checked').val()){v_tob = $('#v_tob:checked').val();}else{v_tob = "False";}
         idi = $('#id_c_idioma').val();
         if($('#v_idi:checked').val()){v_idi = $('#v_idi:checked').val();}else{v_idi = "False";}
-        //nag = $('#id_c_nivel_agregacion').val();
-        //if($('#v_nag:checked').val()){v_nag = $('#v_nag:checked').val();}else{v_nag = "False";}
+
         fec = $('#id_c_fecha').val();
         if($('#v_fec:checked').val()){v_fec = $('#v_fec:checked').val();}else{v_fec = "False";}
-        //tin = $('#id_c_tipo_inter').val();
-        //if($('#v_tin:checked').val()){v_tin = $('#v_tin:checked').val();}else{v_tin = "False";}
+
         tre = $('#id_c_tipo_rec').val();
         if($('#v_tre:checked').val()){v_tre = $('#v_tre:checked').val();}else{v_tre = "False";}
-        //nin = $('#id_c_nivel_inter').val();
-        //if($('#v_nin:checked').val()){v_nin = $('#v_nin:checked').val();}else{v_nin = "False";}
-        /*****Proyectos*****/
-        //var pfas = 0;
-        pfas = $('#id_c_pro_fase').val();
-        if($('#v_pfas:checked').val()){v_pfas = $('#v_pfas:checked').val();}else{v_pfas = "False";}
-        ppro = $('#id_c_pro_prog').val();
-        if($('#v_ppro:checked').val()){v_ppro = $('#v_ppro:checked').val();}else{v_ppro = "False";}
-        pcal = $('#id_c_pro_calif').val();
-        if($('#v_pcal:checked').val()){v_pcal = $('#v_pcal:checked').val();}else{v_pcal = "False";}
-        pfec = $('#id_c_pro_fecha').val();
-        if($('#v_pfec:checked').val()){v_pfec = $('#v_pfec:checked').val();}else{v_pfec = "False";}
-        pgra = $('#id_c_pro_gra').val();
-        if($('#v_pgra:checked').val()){v_pgra = $('#v_pgra:checked').val();}else{v_pgra = "False";}
+
         /*******************/
-        if((v_tit=="True" & tit.length>0) | (v_tob=="True" & tob.length>0) | (v_idi=="True" & idi.length>0) | /*(v_nag=="True" & nag.length>0) |*/ (v_fec=="True" & fec.length>0) | /*(v_tin=="True" & tin.length>0) |*/ (v_tre=="True" & tre.length>0) | /*(v_nin=="True" & nin.length>0) |*/ (v_pfas=="True" & pfas.length>0) | (v_ppro=="True" & ppro.length>0) | (v_pcal=="True" & pcal.length>0) | (v_pfec=="True" & pfec.length>0) | (v_pgra=="True" & pgra.length>0)) {
-            console.log(pgra);
-            $.getJSON("/busqueda", { tit:tit, v_tit:v_tit, tob:tob, v_tob:v_tob, idi:idi, v_idi:v_idi, /*nag:nag, v_nag:v_nag,*/ fec:fec, v_fec:v_fec, /*tin:tin, v_tin:v_tin, */tre:tre, v_tre:v_tre, /*nin:nin, v_nin:v_nin,*/ pfas:pfas, v_pfas:v_pfas, ppro:ppro, v_ppro:v_ppro, pcal:pcal, v_pcal:v_pcal, pfec:pfec, v_pfec:v_pfec, pgra:pgra, v_pgra:v_pgra}, function(json){
+        if((v_tit=="True" & tit.length>0) | (v_tob=="True" & tob.length>0) | (v_idi=="True" & idi.length>0) |(v_fec=="True" & fec.length>0) |  (v_tre=="True" & tre.length>0)  ) {
+            console.log(idi);
+            $.getJSON("/busqueda", { tit:tit, v_tit:v_tit, tob:tob, v_tob:v_tob, idi:idi, v_idi:v_idi, fec:fec, v_fec:v_fec, tre:tre, v_tre:v_tre }, function(json){
                 $("#results2").empty();
                 if (json.length != 0) {
                     obj=json.slice(0,(json.length/2));
@@ -219,32 +131,8 @@ function arranque(name) {
             $("#results2").empty();
         }
     });
-    $('.proyectos_lista').click(function(e) {
-        id=e.target.id;
-        s=id.replace(/p_/g,'');
-        $(".proyectos_lista").css({"background-color":"","color":"#055a9b"});
-        $(this).css({"background-color":"#ccc","color":"black"});
 
-        $.getJSON("/ver_proyecto", { q:s }, function(data){
-            $("#proyectos").empty();
-            $("#pro_val").empty();
-            $("#btn_validar").html("<a href='/validar/"+s+"' class='descarga'>Validar</a>");
-            esp=data.slice(0,1);
-            prog=data.slice(1,2);
-            aut=data.slice(2,data.length);
-            $.each( aut, function( key, val ) {
-                $("#proyectos").append("<dt>Autor"+(key+1)+"</dt><dd>"+aut[key]['fields']['nombres']+" "+aut[key]['fields']['apellidos']+" - "+aut[key]['fields']['rol']+"</dd>");
-            });
-            $.each( esp, function( key, val ) {
-                $("#pro_val").html("<p>"+val['fields']['lc1_titulo']+"</p>")
-                $("#proyectos").append("<dt>Programa Académico</dt><dd>"+prog[key]['fields']['nombre']+"</dd>");
-                $("#proyectos").append("<dt>Descripción</dt><dd>"+val['fields']['lc1_descripcion']+"</dd>");
-                //$("#proyectos").append("<dt>Población Objetivo</dt><dd>"+val['fields']['lc4_poblacion']+"</dd>");
-                $("#proyectos").append("<dt>Derechos de uso</dt><dd>"+val['fields']['lc5_derechos']+"</dd>");
-                $("#proyectos").append("<dt>Uso Educativo</dt><dd>"+val['fields']['lc6_uso_educativo']+"</dd>");
-            });
-        });
-    });
+
 
 /****************************************************/
 
@@ -464,7 +352,7 @@ function validar(ar,nam,las,rol) {
         }
         if(ar[i]==rol){
             b3=true;
-        }        
+        }
     }
     if(b1 & b2 & b3){
         return true;

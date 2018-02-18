@@ -6,7 +6,7 @@ a
 
 body
 {
-	background:#055a9b;
+	background:#7831E8;
 	font-size: 16px;
 	text-align: center;
 }
@@ -53,7 +53,7 @@ form
 
 header
 {
-	background:#055a9b, url("piece.png") no-repeat 98% center;
+	background:#7831E8, url("piece.png") no-repeat 98% center;
 	display: inline-block;
 	height: 80px;
 	margin: 0 0 0.1em 0;
@@ -199,7 +199,7 @@ ul
 #formulario .helptext, #validar .helptext
 {
 	/*border: 1px solid #000;*/
-	color: #055a9b;
+	color: #7831E8;
 	display: block;
 	font-size: 0.8em;
 	margin-bottom: 25px;
@@ -599,7 +599,7 @@ ul
 
 .operaciones_items
 {
-	color: #055a9b;
+	color: #7F38FF;
 	font-size: 0.9em;
 	margin: 0.2em 0 0.2em 1em;
 	padding: 0.2em;
@@ -854,7 +854,7 @@ ul
 {
 	background-color: #fff;
 	border-radius: 0.3em;
-	color: #055a9b;
+	color: #7F38FF;
 	cursor:pointer;
 	font-size: 1.1em;
 	margin: 0.2em auto;

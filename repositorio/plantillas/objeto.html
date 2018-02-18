@@ -3,8 +3,10 @@
 {% block itemMenu %}
 {% if usuario.profile.rol == 'rdoc' %}
 	<li><a class="menusbtn" href="/docente">Objetos</a></li>
+	<li><a class="menusbtn" href="/catalogacion">Catalogacion automática</a></li>
 	{% if objeto.creador.pk == usuario.pk %}
 		<li><a class="menusbtn" id="editarObj" href="/editObjeto/objeto/{{objeto.id}}">Editar Objeto</a></li>
+        <li><a class="menusbtn" id="borrarObj" href="/borrarObjeto/objeto/{{objeto.id}}">Borrar Objeto</a></li>
 	{% endif %}
 {% endif %}
 {% if usuario.profile.rol == 'rcat' %}
@@ -46,10 +48,7 @@
 			Vacío
 			{% endfor %}
 			</dd>
-		<dt>cobertura</dt>
-		<dd>{{espec.lc1_cobertura}}</dd>
-		<dt>Nivel de Agregación</dt>
-		<dd>{{ niv_agr }}</dd>
+
 		<dt>Versión</dt>
 		<dd>{{espec.lc2_version}}</dd>
 		<dt>Autores</dt>
@@ -66,22 +65,8 @@
 		<dd>{{formato}}</dd>
 		<dt>Tamaño</dt>
 		<dd>{{objeto.archivo.size|filesizeformat}}</dd>
-		<dt>Requerimientos</dt>
-		<dd>{{espec.lc3_requerimientos}}</dd>
-		<dt>Instrucciones</dt>
-		<dd>{{espec.lc3_instrucciones}}</dd>
-		<dt>Tipo de interactividad</dt>
-		<dd>{{tipo_i}}</dd>
-		<dt>Nivel de Interactividad</dt>
-		<dd>{{nivel_i}}</dd>
-		<dt>Población</dt>
-		<dd>{{espec.lc4_poblacion}}</dd>
-		<dt>Contexto</dt>
-		<dd>{{context}}</dd>
 		<dt>Derechos de Autor</dt>
 		<dd>{{espec.lc5_derechos}}</dd>
-		<dt>Uso Educativo</dt>
-		<dd>{{espec.lc6_uso_educativo}}</dd>
 		<dt>Categoría</dt>
 		<dd>{{objeto.ruta_categoria}}</dd>
 	</dl>

@@ -38,12 +38,12 @@ class ObjetoAdmin(admin.ModelAdmin):
     'espec_lom__lc1_titulo', 'palabras_claves__palabra_clave', 'espec_lom__lc1_descripcion', 'autores__nombres',
     'autores__apellidos', 'autores__rol')
     list_filter = (
-    'repositorio', 'creador', 'espec_lom__lc1_idioma', 'espec_lom__lc4_contexto', 'espec_lom__lc4_tipo_rec',
+    'repositorio', 'creador', 'espec_lom__lc1_idioma', 'espec_lom__lc4_tipo_rec',
     'ruta_categoria')
     filter_horizontal = ('autores', 'palabras_claves')
     raw_id_fields = ('creador', 'ruta_categoria')
 
-
+    #en list_filter agregar si se quiere buscar por contxto : 'espec_lom__lc4_contexto'
 """
 Clase que permite sobre escribir la clase Autor en la interfaz de administración de django.
 Esto con el fin de modificar las columnas de visualización y los filtros
@@ -74,10 +74,12 @@ Esto con el fin de modificar las columnas de visualización y los filtros
 class EspecificacionLOMAdmin(admin.ModelAdmin):
     list_display = ('lc1_titulo', 'lc2_version')
     search_fields = (
-    'lc1_titulo', 'lc1_descripcion', 'lc1_cobertura', 'lc4_poblacion', 'lc5_derechos', ' lc6_uso_educativo')
-    list_filter = ('lc1_idioma', 'lc4_contexto', 'lc4_tipo_rec', 'lc1_nivel_agregacion', 'lc4_nivel_inter')
+    'lc1_titulo', 'lc1_descripcion', 'lc5_derechos')
+    list_filter = ('lc1_idioma',  'lc4_tipo_rec')
     date_hierarchy = 'lc2_fecha'
 
+    #en search_fields: 'lc1_cobertura', 'lc4_poblacion', ' lc6_uso_educativo'
+    #en list_filter: 'lc4_contexto', 'lc1_nivel_agregacion', 'lc4_nivel_inter'
 
 """
 Registro de los modelos en la interfaz de administración para ser editados por los administradores
