@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
-{% block titulo %} siova: {{objeto|capfirst}} {% endblock %}
+{% block titulo %} Herramientas Web 2.0{{objeto|capfirst}} {% endblock %}
 {% block itemMenu %}
 {% if usuario.profile.rol == 'rdoc' %}
 	<li><a class="menusbtn" href="/docente">Objetos</a></li>
-	<li><a class="menusbtn" href="/catalogacion">Catalogacion automática</a></li>
-	{% if objeto.creador.pk == usuario.pk %}
-		<li><a class="menusbtn" id="editarObj" href="/editObjeto/objeto/{{objeto.id}}">Editar Objeto</a></li>
-        <li><a class="menusbtn" id="borrarObj" href="/borrarObjeto/objeto/{{objeto.id}}">Borrar Objeto</a></li>
-	{% endif %}
+	<li><a class="menusbtn" href="/catalogacion">Catalogacion </a></li>
+    <li><a class="menusbtn" href="/herramientas/">Herramientas Web 2.0</a></li>
+
 {% endif %}
 {% if usuario.profile.rol == 'rcat' %}
 	<li><a class="menusbtn" href="/proyecto">Proyectos</a></li>
@@ -28,7 +26,7 @@
 {% block contenidoIzq %}
 	<div class="titulo_item" id="tit_obj">
 		<p>{{objeto|capfirst}}</p>
-		<div id="descargar"><a class="descarga" href="/descarga/{{objeto.pk}}" target="_blank">Descargar</a></div>
+		<div id="descargar"><a class="descarga" href="/descarga/{{objeto.pk}}" target="_blank">Descargar</a>      {% if objeto.creador.pk == usuario.pk %}<a class="descarga" href="/editObjeto/objeto/{{objeto.id}}" target="_blank">Editar</a>       <a class="descarga" id="borrarObj" href="/borrarObjeto/objeto/{{objeto.id}}" target="_blank">Borrar </a>{% endif %}</div>
 	</div>
 {% endblock %}
 {% block contenidoDer %}

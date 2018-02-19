@@ -721,3 +721,6 @@ def crearUsuario(request):
 def thanks(request):
     return render(request, 'thanks.html')
 
+def herramientasExtra(request):
+    return render(request, 'herramientasExtras.html')
+

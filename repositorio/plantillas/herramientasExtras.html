@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block titulo %} siova: edit-{{proyecto|capfirst}} {% endblock %}
+
+{% block itemMenuUs %}
+    <li class="menusubtn">Bienvenido/a, {{usuario.first_name|capfirst}}&nbsp&nbsp</li>
+    <li><a class="menusubtn" href="/cerrar">Salir</a></li> {% endblock %}
+
+{% block itemNav %}<li><a href="/">Inicio</a></li>{% endblock %}
+{% block contenidoIzq %}
+<div class="titulos" id="titulo">Herramientas Onnline </div>
+        <div class="lista_objetos_publicos"><FONT SIZE="4">Clipchamp</FONT>
+            <div></div>
+            <FONT SIZE="3">Clipchamp ofrece un convertidor de vídeo, un compresor de vídeo, una grabadora de webcam y un editor de vídeo, todo gratis.</FONT>
+             <div class="titulos" id="titulo" ></div>
+        <a class="descarga" href="https://clipchamp.com/es/video-editor">editor de videos</a></div>
+
+        <div class="lista_objetos_publicos"><FONT SIZE="4">Creador de crusigramas</FONT>
+            <div></div>
+            <FONT SIZE="3">Este sitio web ofrece 32,400 crucigramas gratuitos y herramientas divertidas para las personas que disfrutan de los juegos de palabras. Obtenga ayuda con un rompecabezas o cree el suyo, gratis.
+Los crucigramas se dividen en cuatro categorías. Cada categoría tiene un tamaño de cuadrícula diferente. Esto hace que algunos sean más fáciles y rápidos de resolver que otros. Crucigramas para cada ocasión.</FONT>
+             <div class="titulos" id="titulo" ></div>
+            <a class="descarga" href="http://www.crosswordpuzzlegames.com/create.html">crear crucigramas</a></div>
+
+{% endblock %}
+{% block contenidoDer %}
+<div class="titulos" id="titulo">Descargar herramientas </div>
+        <div class="lista_objetos_publicos"><FONT SIZE="4">Hot Potatoes</FONT>
+            <div></div>
+            <FONT SIZE="3">Hot Potatoes es una herramienta de autor desarrollada por el Centro de Humanidades de la Universidad de Victoria (UVIC), en Canadá. Consta de varios programitas o esquemas predeterminados (también los llamaremos simplememente "patatas") que sirven para la elaboración de diversos tipos de ejercicios interactivos multimedia.</FONT>
+             <div class="titulos" id="titulo" ></div>
+        <a class="descarga" href="{{STATIC_URL}}ejecutables/siinst.exe">Descargar patatoes</a></div>
+
+        <div class="lista_objetos_publicos"><FONT SIZE="4">Exelearning</FONT>
+            <div></div>
+            <FONT SIZE="3">es un programa libre y abierto bajo licencia GPL-2 para ayudar a los docentes en la creación y publicación de contenidos, y que permite a profesores y académicos la publicación de contenidos didácticos en soportes informáticos (CD, memorias USB, en la web, en la nube), sin necesidad de ser ni convertirse en expertos en HTML, XML o HTML5. eXeLearning está disponible en GNU/Linux, Microsoft Windows y Mac OS X.</FONT>
+             <div class="titulos" id="titulo" ></div>
+             <a class="descarga" href="http://localhost:51235/newPackage">Abrir Exlearning</a>       <a class="descarga" href="{{STATIC_URL}}ejecutables/exe-ready2run-1.04.exe">Descargar Exlearning Portable</a></div></div>
+         <div class="lista_objetos_publicos"><FONT SIZE="4">Jclic</FONT>
+            <div></div>
+            <FONT SIZE="3">JClic es un entorno para la creación, realización y evaluación de actividades educativas multimedia, desarrollado en el lenguaje de programación Java.Más en Wikipedia (ES)</FONT>
+             <div class="titulos" id="titulo" ></div>
+             <a class="descarga" href="{{STATIC_URL}}ejecutables/clic30fr.exe">Descargar Jclic</a></div>
+{% endblock %}
