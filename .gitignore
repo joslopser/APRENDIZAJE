@@ -4,6 +4,6 @@ __pycache__
 venvpp
 envpp
 objetos
-
-
+gestorObjetos/migrations
+gestorProyectos/migrations
 repositorio/media

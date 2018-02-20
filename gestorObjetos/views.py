@@ -593,6 +593,7 @@ def editObjeto(request,id_objeto):
         return HttpResponseRedirect('/')
 
 
+
 @login_required(login_url='/ingresar')
 def crearAutor(request):
     """
@@ -614,6 +615,13 @@ def crearAutor(request):
     json_serializer = serializers.get_serializer("json")()
     data = json_serializer.serialize(laut, ensure_ascii=False)
     return HttpResponse(data, content_type='application/json')
+
+
+def descargarPot(request):
+    if request.user.is_authenticated():
+        nombre = 'siinst.exe'
+        ruta = settings.EXE_ROOT+'\\'+nombre
+        return serve_file(request, ruta, save_as = nombre)
 
 """
 Vista que permite gestionar la descarga del objeto dependiendo de los permisos que tenga
