@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from gestorObjetos.views import catalogar, crearUsuario, borrarObjeto, thanks, index, ingresar, redirige, downloadEdit, docObjeto, download, crearAutor, editObjeto, principal, privado, categoria, objeto, cerrar, buscar, busqueda,herramientasExtra
+from gestorObjetos.views import descargarPot, catalogar, crearUsuario, borrarObjeto, thanks, index, ingresar, redirige, downloadEdit, docObjeto, download, crearAutor, editObjeto, principal, privado, categoria, objeto, cerrar, buscar, busqueda,herramientasExtra
 from gestorProyectos.views import Proyecto, verProyecto, editProyecto, asociarProyecto
 from gestorProyectos.views_validar import validar
 from gestorProyectos.views_revisor import ver_proyecto, verProyectos
@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^thanks/$', thanks),
     url(r'^catalogacion', catalogar),
     url(r'^herramientas',herramientasExtra),
+    url(r'^descargarPotato', descargarPot),
     #url(r'^registrarUsu', c),
 
     url(r'^proyecto/$',Proyecto ),

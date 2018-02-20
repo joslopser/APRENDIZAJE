@@ -26,7 +26,11 @@
 {% block contenidoIzq %}
 	<div class="titulo_item" id="tit_obj">
 		<p>{{objeto|capfirst}}</p>
-		<div id="descargar"><a class="descarga" href="/descarga/{{objeto.pk}}" target="_blank">Descargar</a>      {% if objeto.creador.pk == usuario.pk %}<a class="descarga" href="/editObjeto/objeto/{{objeto.id}}" target="_blank">Editar</a>       <a class="descarga" id="borrarObj" href="/borrarObjeto/objeto/{{objeto.id}}" target="_blank">Borrar </a>{% endif %}</div>
+		<div id="descargar"><a class="descarga" href="/descarga/{{objeto.pk}}" target="_blank">Descargar</a>
+			{% if objeto.creador.pk == usuario.pk %}
+				<a class="descarga" href="/editObjeto/objeto/{{objeto.id}}">Editar</a>
+				<a class="descarga" id="borrarObj" href="/borrarObjeto/objeto/{{objeto.id}}" >Borrar </a>
+			{% endif %}</div>
 	</div>
 {% endblock %}
 {% block contenidoDer %}
