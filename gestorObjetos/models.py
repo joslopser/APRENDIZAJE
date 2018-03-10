@@ -36,7 +36,7 @@ class Repositorio(models.Model):
     Modelo que representa la carrera/facultad, lugar donde se almacenan los :model:'gestorObjetos.Objeto'
     """
     """Campo que identifica a la facultad con un nombre"""
-    nombre = models.CharField(help_text='Nombre que identifica a la facultad', verbose_name='Nombre de la facultad',
+    nombre = models.CharField(help_text='Nombre que identifica al grupo general', verbose_name='Grupo',
                               max_length=200, null=False, unique=True)
     """campo que permite determinar si la facultad es visible para todos los usuarios o solo para aquellos autorizados"""
     publico = models.BooleanField(help_text='Marca para habilitar la facultad al público', verbose_name='Público',

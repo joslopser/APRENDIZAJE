@@ -15,6 +15,7 @@
 {% endblock %}
 {% block itemNav %}
 	<li><a href="/">Inicio</a></li>
+	<li><a href="/">> Categorias </a></li>
 	{% if abuelo %}
 		> <li><a href="/categoria/{{abuelo.id}}">{{abuelo.nombre_ruta|title}}</a></li>
 	{% endif %}

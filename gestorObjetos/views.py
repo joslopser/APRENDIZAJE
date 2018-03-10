@@ -310,116 +310,134 @@ def catalogar(request):
     if request.user.profile.rol == 'rdoc':
         form = CatalogacionExeLearning(request.POST, request.FILES)
         objetos = Objeto.objects.filter(creador=request.user.id)
+        error = False
+        errorExtension=[]
         #gruposu = request.user.groups.all()
         if request.method == 'POST':
             if form.is_valid():
+                rep = form.cleaned_data['Repositorio']
                 cat = form.cleaned_data['Categoria']
                 filezip = request.FILES['archivoObjeto']
-                archivos.handle_uploaded_file(filezip)
-                archivos.descomprimir(filezip) #obtengo el index.html
-                """
-                files = request.FILES.getlist('archivos')
-                archCatExe = files[0]
-                #archCatExe = form.cleaned_data['archivoIndex']
-                archivos.handle_uploaded_file(archCatExe)
-                archObjExe = files[1]
-                #archObjExe = form.cleaned_data['archivoObjeto']
-                """
-
-
-                #abre archivo para leer contenido con beautifulsoup
-                arch = open(settings.MEDIA_ROOT+'\\index\\'+'index.html', 'r')
-                contenido = arch.read()
-                soup = BeautifulSoup(contenido, "html.parser")
-                tituloExe = str(soup.title.string)
-                idiomaExe = 'sp'
-                autorExe, descripcionExe, licenciaExe = '','',''
-                for tag in soup.find_all('meta'):
-                    try:
-                        if tag.get('name') == 'author':
-                            autorExe = tag.get('content')
-                    except:
-                        pass
-
-                    try:
-                        if tag.get('name') == 'description':
-                            descripcionExe = tag.get('content')
-                            break
-                    except:
-                        pass
-                for tag in soup.find_all('div'):
-                    try:
-                        if tag.get('id') == 'packageLicense':
-                            licenciaExe = tag.get('class')
-                    except:
-                        pass
-                arch.close()
-                #
-                print (filezip)
-                #formObj = ObjetosForm(gruposu, request.FILES.getlist('archivoObjeto'))
-                num='29'
-                fechaR = str(datetime.date.today().year) + '/' + str(datetime.date.today().month) + '/' + str(
-                    datetime.date.today().day)
-                formularioEsp = EspecificacionLOM.objects.create(
-                    lc1_titulo=tituloExe+num,
-                    lc1_idioma=idiomaExe,
-                    lc1_descripcion=descripcionExe,
-                    lc2_version='1.0',
-                    lc2_fecha=fechaR,
-                    lc4_tipo_rec='application/zip',
-                    lc5_derechos=licenciaExe,
-                )
-                #guardo en cada tabla
-                formularioEsp.save()  # se guarda la especificaciónLOM primero
-                esp = EspecificacionLOM.objects.get(lc1_titulo=tituloExe+num)
-                pc = tituloExe  # se toman las palabras claves digitadas
-                re = Repositorio.objects.get(pk=1)  # se toma el repositorio, ver bien OJO
-
-                #objExe.save(commit=False)  # se guarda un instancia temporañ
-                #objExe.espec_lom = esp  # se asocia el objeto con su especificaciónLOM
-                #objExe.creador = request.user  # Se asocia el objeto con el usuario que lo crea
-                #objExe.repositorio = re
-                #objExe.save()  # se guarda el objeto en la base de datos.
-
-                objExe = Objeto.objects.create(
-                    publicado=True,
-                    tipo_obj=opc.get_tipo_obj()[1][0],
-                    archivo=filezip,
-                    espec_lom=esp,
-                    repositorio=re,
-                    ruta_categoria=cat,
-                    #autores = aut,
-                    #palabras_claves=p,
-                    creador=request.user
-                )
-                objExe.save()
-
-                l_autores = autorExe
-                for l in l_autores:  # como el objeto llega como una lista... se debe recorrer per en realidad siempre tiene un solo objeto
-                    stri = l.split(',')  # se divide la lista por comas que representa cada string de campos del autor
-                    for s in stri:  # se recorre cada autor
-                        s = autorExe.split(' ')  # se divide los campos nombres, apellidos y rol en una lista
-                        aut, cr = Autor.objects.get_or_create(nombres=s[0].replace('-', ','),
-                                                              apellidos=s[1].replace('-', ','),
-                                                              rol='-Autor')
-                        if not cr:  # Si ya existe el autor entonces se obvia el proceso de crearlo
-                            aut.save()  # se guarda el autor en la bd
-                        objExe.autores.add(aut)  # se añade al campo manytomany con Autores.
-
-                if ',' in pc:  # si hay comas en las palabras claves
-                    lpc = [x.strip() for x in pc.split(',')]  # se utilizan las palabras claves como una lista de palabras separadas sin comas ni espacios
+                extension = filezip.name.split('.')[-1]
+                if extension != 'zip':
+                    errorExtension.append('El archivo debe ser extension .zip')
+                    error = True
                 else:
-                    lpc = [x.strip() for x in
-                           pc.split(' ')]  # se utilizan las palabras claves como una lista de palabras separadas sin espacios
-                for l in lpc:
-                    p, b = PalabraClave.objects.get_or_create(palabra_clave=l)
-                          # Se crea una palabra clave por cada palabra en la lista
-                    if not b:  # Si ya existe la palabra entonces se obvia el proceso de crearla
-                        p.save()  # se guarda la palabra clave en la bd
-                    objExe.palabras_claves.add(p)  # se añade cada palabra clave al objeto
+                    error = False
+                if not error:
+                    archivos.handle_uploaded_file(filezip) #escribo en otra carpeta temporal
+                    archivos.descomprimir(filezip)  # obtengo el index.html
 
-                messages.add_message(request, messages.SUCCESS, 'Objeto agregado y catalogado exitosamente')
-                form = CatalogacionExeLearning()
+                    #files = request.FILES.getlist('archivos')
+                    #archCatExe = files[0]
+
+                    metadatos = archivos.extraerMetadatos()
+                    # print (filezip)
+                    # formObj = ObjetosForm(gruposu, request.FILES.getlist('archivoObjeto'))
+
+                    fechaR = str(datetime.date.today().year) + '-' + str(datetime.date.today().month) + '-' + str(
+                        datetime.date.today().day)
+                    titulo ='' #se usará para buscar
+                    titulo = metadatos[0]
+                    try:
+                        vf = EspecificacionLOM.objects.get(lc1_titulo=titulo)
+                    except EspecificacionLOM.DoesNotExist:
+                        vf = None
+                        pass
+
+                    if vf == None:
+                        formularioEsp= EspecificacionLOM.objects.create(
+                            lc1_titulo=metadatos[0],  # es el titulo
+                            lc1_idioma=metadatos[1],
+                            lc1_descripcion=metadatos[3],
+                            lc2_version='1.0',
+                            lc2_fecha=fechaR,
+                            lc4_tipo_rec='application/zip',
+                            lc5_derechos=metadatos[4],
+                        )
+                        formularioEsp.save() # se guarda la especificaciónLOM primero
+                    else:
+                        num = 1 #vf.id + 1
+                        for i in range(1,100):
+                            titulo = metadatos[0]+'-'+str(num)
+                            try:
+                                vp = EspecificacionLOM.objects.get(lc1_titulo=titulo)
+                            except EspecificacionLOM.DoesNotExist:
+                                vp = None
+                                pass
+
+                            if vp == None:
+                                formularioEsp = EspecificacionLOM.objects.create(
+                                    lc1_titulo=titulo,  # es el titulo
+                                    lc1_idioma=metadatos[1],
+                                    lc1_descripcion=metadatos[3],
+                                    lc2_version='1.0',
+                                    lc2_fecha=fechaR,
+                                    lc4_tipo_rec='application/zip',
+                                    lc5_derechos=metadatos[4],
+                                )
+                                formularioEsp.save()
+                                break
+                            num += 1
+
+                        print(num)
+                        print(type(num))
+
+                    esp = EspecificacionLOM.objects.get(lc1_titulo=titulo)
+
+                    pc = metadatos[0]  # se toman las palabras claves digitadas
+                    #rep = Repositorio.objects.get(pk=1)  # se toma el repositorio, ver bien OJO
+
+                    # objExe.save(commit=False)  # se guarda un instancia temporañ
+                    # objExe.espec_lom = esp  # se asocia el objeto con su especificaciónLOM
+                    # objExe.creador = request.user  # Se asocia el objeto con el usuario que lo crea
+                    # objExe.repositorio = re
+                    # objExe.save()  # se guarda el objeto en la base de datos.
+
+                    objExe = Objeto.objects.create(
+                        publicado=True,
+                        tipo_obj=opc.get_tipo_obj()[1][0],
+                        archivo=filezip,
+                        espec_lom=esp,
+                        repositorio=rep,
+                        ruta_categoria=cat,
+                        # autores = aut,
+                        # palabras_claves=p,
+                        creador=request.user
+                    )
+                    objExe.save()
+
+                    l_autores = metadatos[2]
+                    for l in l_autores:  # como el objeto llega como una lista... se debe recorrer per en realidad siempre tiene un solo objeto
+                        stri = l.split(
+                            ',')  # se divide la lista por comas que representa cada string de campos del autor
+                        for s in stri:  # se recorre cada autor
+                            s = metadatos[2].split(' ')  # se divide los campos nombres, apellidos y rol en una lista
+                            aut, cr = Autor.objects.get_or_create(nombres=s[0].replace('-', ','),
+                                                                  apellidos=s[1].replace('-', ','),
+                                                                  rol='Autor')
+                            if not cr:  # Si ya existe el autor entonces se obvia el proceso de crearlo
+                                aut.save()  # se guarda el autor en la bd
+                            objExe.autores.add(aut)  # se añade al campo manytomany con Autores.
+
+                    if ',' in pc:  # si hay comas en las palabras claves
+                        lpc = [x.strip() for x in pc.split(
+                            ',')]  # se utilizan las palabras claves como una lista de palabras separadas sin comas ni espacios
+                    else:
+                        lpc = [x.strip() for x in
+                               pc.split(
+                                   ' ')]  # se utilizan las palabras claves como una lista de palabras separadas sin espacios
+                    for l in lpc:
+                        p, b = PalabraClave.objects.get_or_create(palabra_clave=l)
+                        # Se crea una palabra clave por cada palabra en la lista
+                        if not b:  # Si ya existe la palabra entonces se obvia el proceso de crearla
+                            p.save()  # se guarda la palabra clave en la bd
+                        objExe.palabras_claves.add(p)  # se añade cada palabra clave al objeto
+
+                    messages.add_message(request, messages.SUCCESS, 'Objeto agregado y catalogado exitosamente')
+                    form = CatalogacionExeLearning()
+                else:
+                    form = CatalogacionExeLearning(request.POST)
             else:
                 form = CatalogacionExeLearning(request.POST)
                 print("error dela validacion")
@@ -430,7 +448,7 @@ def catalogar(request):
         return HttpResponseRedirect('/')
 
     return render_to_response('catalogacion.html',
-                              {'usuario': request.user, 'objetos': objetos, 'form': form},
+                              {'usuario': request.user, 'objetos': objetos, 'form': form, 'l_errores':errorExtension},
                               context_instance=RequestContext(request))
 
 
@@ -452,6 +470,7 @@ def docObjeto(request):
             if not request.POST.get('palabras_claves'):
                 l_errores.append('No incluyó palabras claves al objeto.')
                 error1=True
+
             if not request.POST.get('repositorio'):
                 l_errores.append('No seleccionó repositorio. Si no hay repositorios asociados, consulte a un administrador del sistema para agregar alguno.')
                 error1=True
@@ -695,14 +714,24 @@ def crearUsuario(request):
             if form.is_valid():
                 dato = form.cleaned_data
                 pwd = User.objects.make_random_password()
-                ussername = dato['Usuario'].lower()
                 user = User.objects.create_user(username=dato['Usuario'].lower(),
                                             first_name=dato['Nombre'], last_name=dato['Apellido'],
                                             email=str(dato['Email']).lower(), password=pwd)
                 user.is_active = True
                 user.is_superuser = False
                 user.save()
-                user.groups.add(Group.objects.get(name='Repositorios'))
+                rol=dato['RolUsu']
+                grupos=[]
+                grupos = Group.objects.all()
+                print(grupos)
+                print(rol)
+                if rol=='rdoc':
+                    user.groups.add(Group.objects.get(name='Docentes'))
+                else:
+                    user.groups.add(Group.objects.get(name='Estudiantes'))
+                #for gr in grupos:
+                #    print(gr)
+                #    user.groups.add(gr)
                 #concediendo permiso de perfil de usuario
                 ru=User.objects.get(username=dato['Usuario'].lower())
 

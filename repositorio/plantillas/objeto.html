@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block titulo %} Herramientas Web 2.0{{objeto|capfirst}} {% endblock %}
+{% block titulo %} Objetos {{objeto|capfirst}} {% endblock %}
 {% block itemMenu %}
 {% if usuario.profile.rol == 'rdoc' %}
 	<li><a class="menusbtn" href="/docente">Objetos</a></li>
@@ -15,7 +15,11 @@
 {% endif %}
 {% endblock %}
 {% block itemMenuUs %}
-	<li class="menusubtn">Bienvenido/a, {{usuario.first_name|capfirst}}&nbsp&nbsp</li>
+	{% if usuario.profile.rol = 'rdoc' %}
+        <li class="menusubtn">Bienvenido/a, docente {{usuario.first_name|capfirst}}&nbsp&nbsp</li>
+   	{% else %}
+        <li class="menusubtn">Bienvenido/a, estudiante {{usuario.first_name|capfirst}}&nbsp&nbsp</li>
+   	{% endif %}
 	{% if usuario %}
 		<li><a class="menusubtn" href="/cerrar">Salir</a></li>
 	{% else %}

@@ -63,7 +63,8 @@ class ParametroAdmin(admin.ModelAdmin):
 	list_display = ('nombre', 'ponderacion')
 	list_filter = ('tipo',)
 
-
+"""
+#se comenta para que no aparezca, ya que no necesitamos por ahora
 admin.site.register(Proyecto, ProyectoAdmin),
 admin.site.register(Facultad),
 admin.site.register(Programa, ProgramaAdmin),
@@ -74,3 +75,4 @@ admin.site.register(Indicador, IndicadorAdmin),
 admin.site.register(Parametro, ParametroAdmin),
 admin.site.register(Validacion, ValidacionAdmin)
 admin.site.register(OperacionMental)
+"""

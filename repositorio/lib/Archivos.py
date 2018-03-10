@@ -3,6 +3,7 @@ import uuid
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import zipfile
+from bs4 import BeautifulSoup
 
 def get_file_path(instance, filename):
 	"""
@@ -41,3 +42,41 @@ def descomprimir(fzip):
 	fantasy_zip.extract('index.html', settings.MEDIA_ROOT+'\\index') #archEspecifico, ubicacionFinal
 
 	fantasy_zip.close()
+
+def extraerMetadatos():
+	# abre archivo para leer contenido con beautifulsoup
+	metadatos = []
+	arch = open(settings.MEDIA_ROOT + '\\index\\' + 'index.html', 'r')
+	contenido = arch.read()
+	soup = BeautifulSoup(contenido, "html.parser")
+	tituloExe = str(soup.title.string)
+	metadatos.append(tituloExe)
+	idiomaExe = 'sp'
+	metadatos.append(idiomaExe)
+	autorExe, descripcionExe, licenciaExe = '', '', ''
+	for tag in soup.find_all('meta'):
+		if tag.get('name') == 'author':
+			autorExe = tag.get('content')
+			metadatos.append(autorExe)
+		elif tag.get('name') == 'description':
+			descripcionExe = tag.get('content')
+			metadatos.append(descripcionExe)
+			break
+
+	if autorExe == '':
+		metadatos.append('Autor ExeLearning')
+	if descripcionExe == '':
+		metadatos.append('No ingreso breve descripcion del objeto de aprendizaje')
+
+	for tag in soup.find_all('div'):
+		if tag.get('id') == 'packageLicense':
+			licenciaExe = tag.get('class')
+			metadatos.append(licenciaExe[1])
+			break
+
+	if not licenciaExe:
+		metadatos.append('Copyright')
+
+	arch.close()
+
+	return metadatos
