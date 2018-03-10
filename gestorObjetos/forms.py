@@ -100,6 +100,7 @@ class RegistarUsuarioForm(forms.Form):
     Email = forms.EmailField()
 
 class CatalogacionExeLearning(forms.Form):
+	Repositorio = forms.ModelChoiceField(queryset=Repositorio.objects.all())
 	Categoria = forms.ModelChoiceField(queryset=RutaCategoria.objects.all())
 	#archivoIndex = forms.FileField(widget=AdminFileWidget, label="Archivo index", help_text='Cargar el archivo index.html')
 	archivoObjeto = forms.FileField(widget=AdminFileWidget, label="Archivo del objeto",
